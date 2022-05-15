@@ -28,6 +28,11 @@ namespace TdTutor
                 options.UseNpgsql(Configuration.GetConnectionString("TdTutor")));
             services.AddSignalR();
             services.AddControllersWithViews();
+            services.AddMemoryCache();
+            services.AddSession( options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(15);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +51,8 @@ namespace TdTutor
             app.UseRouting();
 
             app.UseAuthorization();
+            
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

@@ -12,5 +12,7 @@ namespace TdTutor.Models
         public string nombre { get; set; }
         [Required]
         public string materia { get; set; }
+        [Required]
+        public string contrasenia { get; set; }
     }
 }

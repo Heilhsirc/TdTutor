@@ -20,7 +20,7 @@ namespace TdTutor.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return Redirect("/Login/Index");
         }
 
         public IActionResult Privacy()

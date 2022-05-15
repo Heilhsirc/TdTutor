@@ -17,5 +17,6 @@ namespace TdTutor.Models
         public DbSet<Docente> Docente { get; set; }
         public DbSet<Rector> Rector { get; set; }
         public DbSet<TdTutor.Models.Estudiante> Estudiante { get; set; }
+        public DbSet<Materia> Materia { get; set; }
     }
 }

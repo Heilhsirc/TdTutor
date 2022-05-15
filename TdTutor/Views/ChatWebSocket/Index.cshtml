@@ -6,12 +6,13 @@
 <h1>Chats</h1>
 
 <div class="row">
+
     <div class="col-md-8 offset-2">
         <h2>Chat</h2>
         <ul class="list-group">
             @foreach ( var e in TdTutor.Controllers.ChatWebSocketController.Salas)
             {
-                <li class="list-group-item"><a href="~/ChatWebSocket/Room?room=@e.Key">@e.Value</a></li>
+                <li class="list-group-item"><a href="~/ChatWebSocket/Room?room=@e.Key">@e.Value</a></li> 
             }
         </ul>
     </div> 

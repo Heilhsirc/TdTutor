@@ -1,13 +1,17 @@
-﻿@model int 
-
+﻿@using TdTutor.Models
+@model int 
+@{
+    Docente user2 = (Docente)ViewData["user"];
+}
 <h1>@TdTutor.Controllers.ChatWebSocketController.Salas.GetValueOrDefault(Model)</h1>
-<div class="row">
-    <div class="col-12">
-        <input type="text" placeholder="usuario" id="user">
-        <input type="text" placeholder="usuario" id="message">
-        <button id="btnSend">Enviar</button>
+    <div class="row">
+        <div class="col-12">
+            
+            <input type="hidden" placeholder="usuario" id="user" value ="@user2.nombre">
+            <input type="text" placeholder="usuario" id="message">
+            <input type="submit" id="btnSend" value="Enviar">
+        </div>
     </div>
-</div>
 
 <div class="row">
     <div class="col-12">
@@ -43,7 +47,7 @@
     })
 
     connection.on("MensajeRecibido", (user, message) => {
-        var message = "<div ><b>" + user + "dijo:</b>" + message + "</div>";
+        var message = "<div ><b>" + user + " dijo:</b> " + message + "</div>";
         document.getElementById("messages").innerHTML = 
             message + document.getElementById("messages").innerHTML;
     });

@@ -1,14 +1,13 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using System;
 using System.Threading.Tasks;
 
 namespace TdTutor.Models
 {
     public class Chat: Hub
     {
-        public async Task SendMessage(string room, string user, string message)
+        public  async Task SendMessage(string room, string user, string message)
         {
-            await Clients.Group(room).SendAsync("MensajeRecibido", user, message);
+            await Clients.Group(room).SendAsync("MensajeRecibido",user, message);
         }
 
         public async Task AddToGroup(string room)
