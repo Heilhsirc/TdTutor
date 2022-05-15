@@ -2,30 +2,33 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 using TdTutor.Models;
 
 namespace TdTutor.Controllers
 {
     public class ChatWebSocketController : Controller {
-        Metodos metodos = new Metodos();
-        public static Dictionary<int, string> Salas =
-        new Dictionary<int, string>()
+        private readonly TdTutorDataContext _context;
+
+        public ChatWebSocketController(TdTutorDataContext context)
         {
-            {1,"Matematicas" },
-            {2,"Ingles" },
-            {3,"Español" }
-        };
+            _context = context;
+        }
+        public static Dictionary<int, string> Salas =
+        new Dictionary<int, string>();
 
         public IActionResult Index()
         {
-
+            List<Materia> materias = _context.Materia.ToList();
+            for (int i = 0; i < materias.Count; i++)
+            {
+                Salas.Add(materias[i].id, materias[i].materia.ToString());
+            }
             return View("Index");
         }
 
         public IActionResult Room(int room)
         {
-            List<Materia> materias = metodos.getMaterias();
             Docente user = new Docente();
             user = JsonConvert.DeserializeObject<Docente>(HttpContext.Session.GetString("User"));
             ViewData["user"] = user;            
