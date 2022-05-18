@@ -21,7 +21,16 @@ namespace TdTutor.Controllers
         // GET: Docentes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Docente.ToListAsync());
+            var ap = await (from D in _context.Docente
+                            join rl in _context.Rol on D.rol equals rl.id
+                            select new Docente
+                            {
+                                id = D.id,
+                                nombre = D.nombre,
+                                materia = D.materia,
+                                rol = rl.id
+                            }).Where(x => x.rol == 2).ToListAsync();
+            return View(ap);
         }
 
         // GET: Docentes/Details/5
@@ -53,10 +62,11 @@ namespace TdTutor.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,nombre,materia")] Docente docente)
+        public async Task<IActionResult> Create([Bind("nombre,materia,contrasenia")] Docente docente)
         {
             if (ModelState.IsValid)
             {
+                docente.rol = 2;
                 _context.Add(docente);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -65,7 +75,7 @@ namespace TdTutor.Controllers
         }
 
         // GET: Docentes/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id,int? rol)
         {
             if (id == null)
             {
@@ -80,12 +90,9 @@ namespace TdTutor.Controllers
             return View(docente);
         }
 
-        // POST: Docentes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,nombre,materia")] Docente docente)
+        public async Task<IActionResult> Edit(int id, int rol,[Bind("id,nombre,materia,contrasenia,rol")] Docente docente)
         {
             if (id != docente.id)
             {
@@ -147,6 +154,10 @@ namespace TdTutor.Controllers
         private bool DocenteExists(int id)
         {
             return _context.Docente.Any(e => e.id == id);
+        }
+        private bool RolExists(int rol)
+        {
+            return _context.Docente.Any(e => e.rol == rol);
         }
     }
 }

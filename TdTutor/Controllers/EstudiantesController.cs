@@ -21,10 +21,18 @@ namespace TdTutor.Controllers
         // GET: Estudiantes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Estudiante.ToListAsync());
+            var ap = await (from D in _context.Docente
+                            join rl in _context.Rol on D.rol equals rl.id
+                            select new Docente
+                            {
+                                id = D.id,
+                                nombre = D.nombre,
+                                nroDocumento = D.nroDocumento,
+                                rol = rl.id
+                            }).Where(x => x.rol == 3).ToListAsync();
+            return View(ap);
         }
-
-        // GET: Estudiantes/Details/5
+        // GET: Docentes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,62 +40,63 @@ namespace TdTutor.Controllers
                 return NotFound();
             }
 
-            var estudiante = await _context.Estudiante
+            var docente = await _context.Docente
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (estudiante == null)
+            if (docente == null)
             {
                 return NotFound();
             }
 
-            return View(estudiante);
+            return View(docente);
         }
 
-        // GET: Estudiantes/Create
+        // GET: Docentes/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Estudiantes/Create
+        // POST: Docentes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,nombre,nroDocumento")] Estudiante estudiante)
+        public async Task<IActionResult> Create([Bind("nombre,nroDocumento,contrasenia")] Docente docente)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(estudiante);
+                docente.rol = 3;
+                _context.Add(docente);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(estudiante);
+            return View(docente);
         }
 
-        // GET: Estudiantes/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        // GET: Docentes/Edit/5
+        public async Task<IActionResult> Edit(int? id, int? rol)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var estudiante = await _context.Estudiante.FindAsync(id);
-            if (estudiante == null)
+            var docente = await _context.Docente.FindAsync(id);
+            if (docente == null)
             {
                 return NotFound();
             }
-            return View(estudiante);
+            return View(docente);
         }
 
-        // POST: Estudiantes/Edit/5
+        // POST: Docentes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,nombre,nroDocumento")] Estudiante estudiante)
+        public async Task<IActionResult> Edit(int id, int rol,[Bind("id,nombre,nroDocumento,contrasenia,rol")] Docente docente)
         {
-            if (id != estudiante.id)
+            if (id != docente.id)
             {
                 return NotFound();
             }
@@ -96,12 +105,12 @@ namespace TdTutor.Controllers
             {
                 try
                 {
-                    _context.Update(estudiante);
+                    _context.Update(docente);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EstudianteExists(estudiante.id))
+                    if (!DocenteExists(docente.id))
                     {
                         return NotFound();
                     }
@@ -112,10 +121,10 @@ namespace TdTutor.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(estudiante);
+            return View(docente);
         }
 
-        // GET: Estudiantes/Delete/5
+        // GET: Docentes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +132,30 @@ namespace TdTutor.Controllers
                 return NotFound();
             }
 
-            var estudiante = await _context.Estudiante
+            var docente = await _context.Docente
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (estudiante == null)
+            if (docente == null)
             {
                 return NotFound();
             }
 
-            return View(estudiante);
+            return View(docente);
         }
 
-        // POST: Estudiantes/Delete/5
+        // POST: Docentes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var estudiante = await _context.Estudiante.FindAsync(id);
-            _context.Estudiante.Remove(estudiante);
+            var docente = await _context.Docente.FindAsync(id);
+            _context.Docente.Remove(docente);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EstudianteExists(int id)
+        private bool DocenteExists(int id)
         {
-            return _context.Estudiante.Any(e => e.id == id);
+            return _context.Docente.Any(e => e.id == id);
         }
     }
 }

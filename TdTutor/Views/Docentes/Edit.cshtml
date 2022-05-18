@@ -3,37 +3,62 @@
 @{
     ViewData["Title"] = "Edit";
 }
-
-<h1>Edit</h1>
+<link rel="stylesheet" href="~/css/form.css" />
+<h1>Editar</h1>
 
 <h4>Docente</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" id="formulario" class="formulario">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="id" />
-            <div class="form-group">
-                <label asp-for="nombre" class="control-label"></label>
-                <input asp-for="nombre" class="form-control" />
-                <span asp-validation-for="nombre" class="text-danger"></span>
+            <!--Grupo Nombre-->
+			<div class="formulario__grupo" id="grupo__nombre">
+				<label id="nombre" class="formulario__label">Nombre</label>
+				<div class="formulario__grupo-input">
+					<input asp-for="nombre" id="nombre" class="formulario__input  form-control" name="nombre" placeholder="Nombre"/>
+					<span asp-validation-for="nombre" class="text-danger"></span>
+					<i class="formulario__validacion-estado fas fa-times-circle"></i>
+				</div>
+					<p class="formulario__input-error">El nombre tiene que ser de 4 a 16 dígitos y solo puede contener numeros, letras, espacios y guion bajo.</p>
             </div>
-            <div class="form-group">
-                <label asp-for="materia" class="control-label"></label>
-                <input asp-for="materia" class="form-control" />
-                <span asp-validation-for="materia" class="text-danger"></span>
+			<!--Grupo Materia-->
+			<div class="formulario__grupo" id="grupo__materia">
+				<label id="materia" class="formulario__label">Materia</label>
+				<div class="formulario__grupo-input">
+					<input asp-for="materia" id="materia" class="formulario__input  form-control" name="materia" placeholder="Materia"/>
+					<span asp-validation-for="materia" class="text-danger"></span>
+					<i class="formulario__validacion-estado fas fa-times-circle"></i>
+				</div>
+					<p class="formulario__input-error">la materia tiene que ser de 4 a 16 dígitos y solo puede contener numeros, letras y espacios.</p>
+            </div><!--Grupo Contraseña-->
+			<div class="formulario__grupo" id="grupo__contrasenia">
+				<label id="contrasenia" class="formulario__label">Contraseña</label>
+				<div class="formulario__grupo-input">
+					<input asp-for="contrasenia" id="contrasenia" class="formulario__input  form-control" type="password" name="contrasenia" placeholder="contraseña"/>
+					<span asp-validation-for="contrasenia" class="text-danger"></span>
+					<i class="formulario__validacion-estado fas fa-times-circle"></i>
+				</div>
+					<p class="formulario__input-error">La constraseña debe ser minimo de 4 caracteres y maximo 8</p>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
+
+            <div class="formulario__mensaje" id="formulario__mensaje">
+				<p><i class="fas fa-exclamation-triangle"></i> <b>Error:</b> Por favor rellena el formulario correctamente. </p>
+			</div>
+
+            <div class="formulario__grupo formulario__grupo-btn-enviar">
+				<button type="submit" class="formulario__btn  form-control" id="btnEnviar">Enviar</button>
+				<p class="formulario__mensaje-exito" id="formulario__mensaje-exito">Formulario enviado exitosamente!</p>
+			</div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Volver a la lista</a>
 </div>
-
+<script src="~/js/EditDocente.js" asp-append-version="true"></script>
+<script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TdTutor.Models;
@@ -20,9 +21,16 @@ namespace TdTutor.Controllers
         public IActionResult Index()
         {
             List<Materia> materias = _context.Materia.ToList();
+            Salas.Clear();
             for (int i = 0; i < materias.Count; i++)
             {
-                Salas.Add(materias[i].id, materias[i].materia.ToString());
+                try
+                {
+                    Salas.Add(materias[i].id, materias[i].materia.ToString());
+                }catch(Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
             return View("Index");
         }

@@ -28,9 +28,7 @@ namespace TdTutor.Controllers
             }
             else
             {
-                int cont = 0;
                 HttpContext.Session.SetString("User", JsonConvert.SerializeObject(user));
-                HttpContext.Session.SetInt32("cantidad", cont+1);
                 return Redirect("/Docentes/Index?id=1");
             }
         }

@@ -1,22 +1,22 @@
-﻿@model IEnumerable<TdTutor.Models.Estudiante>
+﻿@model IEnumerable<TdTutor.Models.Docente>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Lista</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Registrar Estudiante</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                Nombre
+                @Html.DisplayNameFor(model => model.nombre)
             </th>
             <th>
-                Documento
+                <a>Documento</a>
             </th>
             <th></th>
         </tr>
@@ -27,13 +27,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.nombre)
             </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.nroDocumento)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.id" asp-route-rol="@item.rol">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.id">Ver</a> |
+                <a asp-action="Delete" asp-route-id="@item.id">Eliminar</a>
             </td>
         </tr>
 }

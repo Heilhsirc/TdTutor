@@ -10,9 +10,9 @@ namespace TdTutor.Models
         public int id { get; set; }
         [Required]
         public string nombre { get; set; }
-        [Required]
         public string materia { get; set; }
-        [Required]
         public string contrasenia { get; set; }
+        public int rol { get; set; }
+        public string nroDocumento { get; set; }
     }
 }

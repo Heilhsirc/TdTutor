@@ -58,7 +58,7 @@ namespace TdTutor
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}/{rol?}");
                 endpoints.MapHub<Chat>("/chat");
             });
         }
