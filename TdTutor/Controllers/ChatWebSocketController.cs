@@ -15,8 +15,7 @@ namespace TdTutor.Controllers
         {
             _context = context;
         }
-        public static Dictionary<int, string> Salas =
-        new Dictionary<int, string>();
+        public static Dictionary<int, string> Salas = new Dictionary<int, string>();
 
         public IActionResult Index()
         {

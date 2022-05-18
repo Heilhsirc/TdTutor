@@ -155,9 +155,5 @@ namespace TdTutor.Controllers
         {
             return _context.Docente.Any(e => e.id == id);
         }
-        private bool RolExists(int rol)
-        {
-            return _context.Docente.Any(e => e.rol == rol);
-        }
     }
 }

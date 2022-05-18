@@ -3,25 +3,32 @@
 @{
     Docente user2 = (Docente)ViewData["user"];
 }
+<link rel="stylesheet" href="~/css/chat.css"/>
 <h1>@TdTutor.Controllers.ChatWebSocketController.Salas.GetValueOrDefault(Model)</h1>
-    <div class="row">
-        <div class="col-12">
-            
-            <input type="hidden" placeholder="usuario" id="user" value ="@user2.nombre">
-            <input type="text" placeholder="usuario" id="message">
-            <input type="submit" id="btnSend" value="Enviar">
-        </div>
-    </div>
-
 <div class="row">
-    <div class="col-12">
-        <div id="messages"></div>
-    </div>
-    <div class="col-12">
-        <div id="notifications"></div>
+    <div class="mensajes">
+        <div class="col-12">
+            <div id="messages"></div>
+        </div>
+        <div class="col-12">
+            <div id="notifications"></div>
+        </div>
     </div>
 </div>
 
+    <div class="row">
+        <div class="col-12">
+            <div class="textos">
+                <div class="in">
+                    <input type="hidden" placeholder="usuario" id="user" value ="@user2.nombre">
+                    <input type="text" placeholder="usuario" id="message">
+                </div>
+                <div class="out">
+                    <input type="submit" id="btnSend" value="Enviar">
+                </div>
+            </div>
+        </div>
+    </div>
 <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
 
 <script>
